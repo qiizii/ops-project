@@ -1,0 +1,483 @@
+@use 'sass:color';
+@use './variables.scss' as v;
+
+/**
+ * ant-design-vue 样式覆盖
+ * 基于品牌色彩规范，覆盖组件库默认样式
+ */
+
+/* 全局字体样式覆盖 */
+.ant-typography,
+.ant-btn,
+.ant-input,
+.ant-select,
+.ant-dropdown-menu,
+.ant-menu,
+.ant-pagination,
+.ant-table,
+.ant-modal,
+.ant-form,
+.ant-message,
+.ant-notification,
+.ant-drawer,
+.ant-card,
+.ant-tabs,
+.ant-badge,
+.ant-tag,
+.ant-tooltip,
+.ant-popover,
+.ant-list {
+  font-family: v.$font-family !important;
+}
+
+/* 字号覆盖 */
+.ant-typography {
+  &-title {
+    &.ant-typography-h1 {
+      font-size: v.$font-size-xl !important;
+      line-height: v.$line-height-xl !important;
+      font-weight: v.$font-weight-medium !important;
+    }
+    
+    &.ant-typography-h2 {
+      font-size: v.$font-size-lg !important;
+      line-height: v.$line-height-lg !important;
+      font-weight: v.$font-weight-medium !important;
+    }
+    
+    &.ant-typography-h3, 
+    &.ant-typography-h4, 
+    &.ant-typography-h5 {
+      font-size: v.$font-size-base !important;
+      line-height: v.$line-height-base !important;
+      font-weight: v.$font-weight-medium !important;
+    }
+  }
+  
+  &-paragraph {
+    font-size: v.$font-size-base !important;
+    line-height: v.$line-height-base !important;
+  }
+  
+  &-secondary {
+    font-size: v.$font-size-sm !important;
+    line-height: v.$line-height-sm !important;
+  }
+}
+
+/* 表单标签字体 */
+.ant-form {
+  &-item-label > label {
+    font-size: v.$font-size-base !important;
+    line-height: v.$line-height-base !important;
+  }
+  
+  &-item-explain, &-item-extra {
+    font-size: v.$font-size-sm !important;
+    line-height: v.$line-height-sm !important;
+  }
+}
+
+/* 按钮字体 */
+.ant-btn {
+  font-size: v.$font-size-base !important;
+  line-height: v.$line-height-base !important;
+  
+  &-sm {
+    font-size: v.$font-size-sm !important;
+    line-height: v.$line-height-sm !important;
+  }
+  
+  &-lg {
+    font-size: v.$font-size-lg !important;
+    line-height: v.$line-height-lg !important;
+  }
+  
+  &-primary {
+    background-color: v.$primary-color;
+    border-color: v.$primary-color;
+    
+    &:hover, &:focus {
+      background-color: v.$primary-hover;
+      border-color: v.$primary-hover;
+    }
+    
+    &:active {
+      background-color: v.$primary-active;
+      border-color: v.$primary-active;
+    }
+  }
+  
+  &-link {
+    color: v.$link-color;
+    
+    &:hover, &:focus {
+      color: color.scale(v.$link-color, $lightness: 17.06%);
+    }
+    
+    &:active {
+      color: color.scale(v.$link-color, $lightness: -24.17%);
+    }
+  }
+}
+
+/* 菜单样式覆盖 */
+.ant-menu {
+  font-size: v.$font-size-base !important;
+  line-height: v.$line-height-base !important;
+  
+  &-item {
+    &-selected, &-active {
+      color: v.$primary-color !important;
+      background-color: color.mix(v.$primary-hover, white, 10%) !important;
+
+      &::after {
+        border-right-color: v.$primary-color !important;
+      }
+    }
+  }
+  
+  &-submenu {
+    &-selected > .ant-menu-submenu-title {
+      color: v.$primary-color !important;
+    }
+  }
+  
+  &-dark {
+    background-color: v.$bg-color-dark !important;
+    
+    .ant-menu-item-selected {
+      background-color: v.$primary-color !important;
+    }
+  }
+}
+
+/* Tab样式覆盖 */
+.ant-tabs {
+  &-tab {
+    font-size: v.$font-size-base !important;
+    line-height: v.$line-height-base !important;
+  }
+  
+  &-ink-bar {
+    background-color: v.$primary-color !important;
+  }
+  
+  &-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: v.$primary-color !important;
+    font-weight: v.$font-weight-medium !important;
+  }
+  
+  &-tab:hover {
+    color: v.$primary-hover !important;
+  }
+}
+
+/* 表格样式覆盖 */
+.ant-table {
+  font-size: v.$font-size-base !important;
+  line-height: v.$line-height-base !important;
+  
+  &-thead > tr > th {
+    background: color.mix(v.$primary-color, white, 5%) !important;
+    color: v.$text-color-primary !important;
+    font-weight: v.$font-weight-medium !important;
+  }
+  
+  &-row:hover > td {
+    background-color: color.mix(v.$primary-hover, white, 5%) !important;
+  }
+}
+
+/* 复选框样式覆盖 */
+.ant-checkbox {
+  &-checked {
+    .ant-checkbox-inner {
+      background-color: v.$primary-color !important;
+      border-color: v.$primary-color !important;
+    }
+  }
+  
+  &-wrapper:hover .ant-checkbox-inner,
+  &:hover .ant-checkbox-inner,
+  &-input:focus + .ant-checkbox-inner {
+    border-color: v.$primary-color !important;
+  }
+}
+
+/* 单选框样式覆盖 */
+.ant-radio {
+  &-checked {
+    .ant-radio-inner {
+      border-color: v.$primary-color !important;
+      
+      &::after {
+        background-color: v.$primary-color !important;
+      }
+    }
+  }
+  
+  &-wrapper:hover .ant-radio-inner,
+  &:hover .ant-radio-inner,
+  &-input:focus + .ant-radio-inner {
+    border-color: v.$primary-color !important;
+  }
+}
+
+/* 开关样式覆盖 */
+.ant-switch {
+  &-checked {
+    background-color: v.$primary-color !important;
+  }
+}
+
+/* 分页样式覆盖 */
+.ant-pagination {
+  font-size: v.$font-size-base !important;
+  line-height: v.$line-height-base !important;
+  
+  &-item {
+    &:hover, &:focus {
+      border-color: v.$primary-color !important;
+      
+      a {
+        color: v.$primary-color !important;
+      }
+    }
+    
+    &-active {
+      border-color: v.$primary-color !important;
+      
+      a {
+        color: v.$primary-color !important;
+      }
+      
+      &:hover, &:focus {
+        border-color: v.$primary-hover !important;
+        
+        a {
+          color: v.$primary-hover !important;
+        }
+      }
+    }
+  }
+  
+  &-prev, &-next {
+    &:hover, &:focus {
+      .ant-pagination-item-link {
+        color: v.$primary-color !important;
+        border-color: v.$primary-color !important;
+      }
+    }
+  }
+}
+
+/* 表单样式覆盖 */
+.ant-form {
+  &-item-has-error {
+    .ant-input, .ant-input-affix-wrapper, .ant-input:hover, .ant-input-affix-wrapper:hover {
+      border-color: v.$error-color !important;
+    }
+    
+    .ant-form-item-explain, .ant-form-item-split {
+      color: v.$error-color !important;
+    }
+  }
+}
+
+/* 输入框样式覆盖 */
+.ant-input {
+  font-size: v.$font-size-base !important;
+  line-height: v.$line-height-base !important;
+  
+  &:hover {
+    border-color: v.$primary-hover !important;
+  }
+  
+  &:focus, &-focused {
+    border-color: v.$primary-color !important;
+    box-shadow: 0 0 0 2px rgba(v.$primary-color, 0.2) !important;
+  }
+}
+
+.ant-input-affix-wrapper {
+  &:hover {
+    border-color: v.$primary-hover !important;
+  }
+  
+  &:focus, &-focused {
+    border-color: v.$primary-color !important;
+    box-shadow: 0 0 0 2px rgba(v.$primary-color, 0.2) !important;
+  }
+}
+
+/* 下拉菜单样式覆盖 */
+.ant-select {
+  font-size: v.$font-size-base !important;
+  
+  &:hover {
+    .ant-select-selector {
+      border-color: v.$primary-hover !important;
+    }
+  }
+  
+  &-focused, &:focus {
+    .ant-select-selector {
+      border-color: v.$primary-color !important;
+      box-shadow: 0 0 0 2px rgba(v.$primary-color, 0.2) !important;
+    }
+  }
+  
+  &-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: color.mix(v.$primary-color, white, 10%) !important;
+  }
+}
+
+/* 通知提醒框样式覆盖 */
+.ant-message {
+  font-size: v.$font-size-base !important;
+  line-height: v.$line-height-base !important;
+  
+  &-info .anticon,
+  &-loading .anticon {
+    color: v.$info-color !important;
+  }
+  
+  &-success .anticon {
+    color: v.$success-color !important;
+  }
+  
+  &-warning .anticon {
+    color: v.$warning-color !important;
+  }
+  
+  &-error .anticon {
+    color: v.$error-color !important;
+  }
+}
+
+/* 模态框样式覆盖 */
+.ant-modal {
+  &-header {
+    background-color: v.$primary-color !important;
+    color: white !important;
+    
+    .ant-modal-title {
+      color: white !important;
+      font-size: v.$font-size-lg !important;
+      line-height: v.$line-height-lg !important;
+      font-weight: v.$font-weight-medium !important;
+    }
+  }
+  
+  &-body {
+    font-size: v.$font-size-base !important;
+    line-height: v.$line-height-base !important;
+  }
+  
+  &-close {
+    color: rgba(255, 255, 255, 0.7) !important;
+    
+    &:hover {
+      color: white !important;
+    }
+  }
+}
+
+/* 提示框样式覆盖 */
+.ant-tooltip {
+  &-inner {
+    background-color: rgba(v.$bg-color-dark, 0.95) !important;
+    font-size: v.$font-size-sm !important;
+    line-height: v.$line-height-sm !important;
+  }
+  
+  &-arrow-content {
+    background-color: rgba(v.$bg-color-dark, 0.95) !important;
+  }
+}
+
+/* 日期选择器样式覆盖 */
+.ant-picker {
+  font-size: v.$font-size-base !important;
+  line-height: v.$line-height-base !important;
+  
+  &:hover, &-focused {
+    border-color: v.$primary-color !important;
+  }
+  
+  &-cell {
+    &-selected .ant-picker-cell-inner {
+      background-color: v.$primary-color !important;
+    }
+    
+    &-today .ant-picker-cell-inner::before {
+      border-color: v.$primary-color !important;
+    }
+    
+    &:hover .ant-picker-cell-inner {
+      background-color: color.mix(v.$primary-color, white, 20%) !important;
+    }
+  }
+}
+
+/* 导航条样式覆盖 */
+.ant-layout-header {
+  background-color: v.$primary-color !important;
+  
+  .ant-menu-horizontal {
+    background-color: v.$primary-color !important;
+    font-size: v.$font-size-base !important;
+    line-height: v.$line-height-base !important;
+    
+    > .ant-menu-item, 
+    > .ant-menu-submenu {
+      color: v.$nav-text-color !important;
+      border-bottom-color: transparent !important;
+      
+      &:hover {
+        color: white !important;
+        border-bottom-color: white !important;
+      }
+      
+      &-selected {
+        color: white !important;
+        border-bottom-color: white !important;
+      }
+    }
+  }
+}
+
+/* Tag标签样式覆盖 */
+.ant-tag {
+  font-size: v.$font-size-sm !important;
+  line-height: v.$line-height-sm !important;
+  
+  &-blue {
+    color: v.$primary-color !important;
+    background: color.mix(v.$primary-color, white, 10%) !important;
+    border-color: color.mix(v.$primary-color, white, 40%) !important;
+  }
+}
+
+/* 进度条样式覆盖 */
+.ant-progress {
+  &-bg {
+    background-color: v.$primary-color !important;
+  }
+}
+
+/* 抽屉样式覆盖 */
+.ant-drawer {
+  &-title {
+    color: v.$text-color-primary !important;
+    font-size: v.$font-size-lg !important;
+    line-height: v.$line-height-lg !important;
+    font-weight: v.$font-weight-medium !important;
+  }
+  
+  &-body {
+    font-size: v.$font-size-base !important;
+    line-height: v.$line-height-base !important;
+  }
+} 
