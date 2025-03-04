@@ -82,6 +82,7 @@
 .ant-btn {
   font-size: v.$font-size-base !important;
   line-height: v.$line-height-base !important;
+  border: none;
   
   &-sm {
     font-size: v.$font-size-sm !important;
@@ -100,11 +101,13 @@
     &:hover, &:focus {
       background-color: v.$primary-hover;
       border-color: v.$primary-hover;
+      border: none;
     }
     
     &:active {
       background-color: v.$primary-active;
       border-color: v.$primary-active;
+      border: none;
     }
   }
   

@@ -77,6 +77,10 @@
     "watchSyncEffect": true,
     "Modal": true,
     "message": true,
-    "notification": true
+    "notification": true,
+    "getUserInfoApi": true,
+    "loginApi": true,
+    "logoutApi": true,
+    "useUserStore": true
   }
 }

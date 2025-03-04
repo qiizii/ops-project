@@ -48,10 +48,10 @@
           </a-input-password>
         </a-form-item>
         
-        <div class="login-options">
+        <!-- <div class="login-options">
           <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
           <a class="forgot-link">忘记密码?</a>
-        </div>
+        </div> -->
         
         <a-form-item>
           <a-button
@@ -71,17 +71,17 @@
 </template>
 
 <script setup lang="ts">
-
 const router = useRouter()
+const route = useRoute()
 const formRef = ref()
+const userStore = useUserStore()
 const loading = ref(false)
-console.log(router);
 
 // 表单状态
 const formState = reactive({
-  username: '',
-  password: '',
-  remember: false
+  username: 'admin', // 默认填写admin方便测试
+  password: 'admin', // 默认填写admin方便测试
+  remember: true
 })
 
 // 表单验证规则
@@ -92,33 +92,46 @@ const rules = {
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码长度不能少于6个字符', trigger: 'blur' }
+    { min: 4, message: '密码长度不能少于4个字符', trigger: 'blur' }
   ]
 }
 
 // 提交表单
-const handleFinish = (values: any) => {
-  loading.value = true
-  
-  // 模拟登录请求
-  setTimeout(() => {
+const handleFinish = async (values: any) => {
+  try {
+    loading.value = true
+    const result = await userStore.login(values.username, values.password)
+    
+    if (result) {
+      message.success('登录成功')
+      
+      // 如果有重定向参数，则跳转到相应页面
+      const redirectPath = route.query.redirect as string
+      
+      // 使用 push 而不是 replace 进行跳转
+      router.push(redirectPath || '/dashboard')
+    } else {
+      message.error('登录失败，请检查用户名和密码')
+    }
+  } catch (error) {
+    message.error('登录过程发生错误')
+    console.error('登录错误:', error)
+  } finally {
     loading.value = false
-    message.success('登录成功')
-    router.push('/home')
-  }, 1500)
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@use "sass:color";
-
 .login-container {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  @include m.flex(row, center, center);
-  background: linear-gradient(135deg, color.scale(v.$bg-color-dark, $lightness: 16.31%) 0%, color.scale(v.$primary-color, $lightness: 6.64%) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #2a4b8d, #3a6cce);
 }
 
 .login-background {
@@ -134,7 +147,7 @@ const handleFinish = (values: any) => {
 .shape {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(5px);
   animation: float 10s infinite ease-in-out;
   
@@ -179,15 +192,16 @@ const handleFinish = (values: any) => {
   position: relative;
   z-index: 1;
   width: 420px;
-  border-radius: v.$border-radius-lg;
+  border-radius: 16px;
   overflow: hidden;
-  @include m.box-shadow(3);
-  background-color: rgba(v.$module-color, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   animation: fadeIn 0.8s ease-out;
+  padding: 20px;
   
   :deep(.ant-card-body) {
-    padding: v.$spacing-xl;
+    padding: 20px;
   }
 }
 
@@ -203,20 +217,24 @@ const handleFinish = (values: any) => {
 }
 
 .login-header {
-  margin-bottom: v.$spacing-xl;
+  margin-bottom: 24px;
   text-align: center;
   
   .logo-container {
-    @include m.flex(row, center, center);
-    margin-bottom: v.$spacing-md;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
     
     .logo-icon {
-      margin-right: v.$spacing-sm;
+      margin-right: 12px;
       width: 36px;
       height: 36px;
       border-radius: 8px;
-      background: linear-gradient(135deg, v.$primary-color, color.scale(v.$primary-color, $lightness: 19.92%));
-      @include m.flex(row, center, center);
+      background: linear-gradient(135deg, #3a6cce, #2a4b8d);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       
       .icon-placeholder {
         display: block;
@@ -230,18 +248,19 @@ const handleFinish = (values: any) => {
     
     h1 {
       margin: 0;
-      font-size: v.$font-size-xl;
-      line-height: v.$line-height-xl;
-      color: color.scale(v.$primary-color, $lightness: -5%);
+      font-size: 24px;
+      line-height: 32px;
+      color: #1f2937;
       letter-spacing: 1px;
+      font-weight: 600;
     }
   }
   
   .welcome-text {
     margin: 0;
-    color: v.$text-color-primary;
-    font-size: v.$font-size-base;
-    line-height: v.$line-height-base;
+    color: #374151;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
@@ -251,18 +270,18 @@ const handleFinish = (values: any) => {
   transform: translateY(10px);
   
   :deep(.ant-form-item) {
-    margin-bottom: v.$spacing-lg;
+    margin-bottom: 20px;
     
     .ant-input-affix-wrapper {
-      border-radius: v.$border-radius-base;
-      border: 1px solid rgba(v.$border-color-base, 0.8);
+      border-radius: 8px;
+      border: 1px solid rgba(229, 231, 235, 0.8);
       
       &:hover, &:focus {
-        border-color: v.$primary-color;
+        border-color: #3a6cce;
       }
       
       .anticon {
-        color: v.$text-color-tertiary;
+        color: #6b7280;
       }
     }
   }
@@ -276,17 +295,19 @@ const handleFinish = (values: any) => {
 }
 
 .login-options {
-  @include m.flex(row, space-between, center);
-  margin-bottom: v.$spacing-md;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
   
   .forgot-link {
-    color: color.scale(v.$primary-color, $lightness: -20.24%);
-    font-size: v.$font-size-sm;
+    color: #2a4b8d;
+    font-size: 14px;
     cursor: pointer;
-    @include m.transition;
+    transition: all 0.3s ease;
     
     &:hover {
-      color: v.$primary-color;
+      color: #3a6cce;
       text-decoration: underline;
     }
   }
@@ -294,17 +315,17 @@ const handleFinish = (values: any) => {
 
 .login-button {
   height: 46px;
-  font-size: v.$font-size-base;
-  line-height: v.$line-height-base;
-  font-weight: v.$font-weight-medium;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
   letter-spacing: 1px;
-  border-radius: v.$border-radius-base;
-  box-shadow: 0 4px 12px rgba(v.$primary-color, 0.2);
-  @include m.transition(all, 0.3s);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(58, 108, 206, 0.2);
+  transition: all 0.3s ease;
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(v.$primary-color, 0.3);
+    box-shadow: 0 6px 20px rgba(58, 108, 206, 0.3);
   }
   
   &:active {
@@ -313,7 +334,7 @@ const handleFinish = (values: any) => {
 }
 
 // 响应式适配
-@include m.respond-to(xs) {
+@media (max-width: 768px) {
   .login-card {
     width: 90%;
     max-width: 360px;

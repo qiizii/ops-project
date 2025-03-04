@@ -32,6 +32,7 @@ export default defineConfig({
     AutoImport({
       // 自动导入的API类型声明文件生成位置
       dts: 'src/types/auto-imports.d.ts',
+      dirs: ['src/components/**', 'src/store/**', 'src/api/**'],
       // 需要自动导入的API
       imports: [
         'vue',  // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
